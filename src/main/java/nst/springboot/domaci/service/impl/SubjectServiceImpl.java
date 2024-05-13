@@ -30,14 +30,10 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     @Transactional
     public SubjectDto save(SubjectDto subjectDto) throws Exception {
-        Subject subject = subjectConverter.toEntity(subjectDto);
-        if(subject.getDepartment().getId() == null){
-            departmentRepository.save(subject.getDepartment());
-        } else {
-            Optional<Department> dept = departmentRepository.findById(subject.getDepartment().getId());
-            if(dept.isEmpty()) departmentRepository.save(subject.getDepartment());
-        }
-        return subjectConverter.toDto(subjectRepository.save(subject));
+        Optional<Subject> subject = subjectRepository.findByName(subjectDto.getName());
+        if (subject.isPresent()) throw new Exception("Subject sa tim imenom postoji!");
+
+        return subjectConverter.toDto(subjectRepository.save(subjectConverter.toEntity(subjectDto)));
     }
 
     @Override

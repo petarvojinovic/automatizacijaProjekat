@@ -5,6 +5,7 @@
 package nst.springboot.domaci.dto;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -59,6 +60,18 @@ public class SubjectDto implements Serializable {
         this.departmentDto = departmentDto;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubjectDto that = (SubjectDto) o;
+        return esbp == that.esbp && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(departmentDto, that.departmentDto);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, esbp, departmentDto);
+    }
    
     
 }

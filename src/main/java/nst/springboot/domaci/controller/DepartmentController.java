@@ -23,9 +23,9 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@Valid @RequestBody DepartmentDto departmentDto) throws Exception{
+    public @ResponseBody ResponseEntity<DepartmentDto> save(@Valid @RequestBody DepartmentDto departmentDto) throws Exception{
         DepartmentDto dto = departmentService.save(departmentDto);
-        return new ResponseEntity<>(dto, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
     @GetMapping
@@ -52,8 +52,8 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
-    public DepartmentDto findById(@PathVariable("id") Long id) throws Exception {
-        return departmentService.findById(id);
+    public ResponseEntity<Object> findById(@PathVariable("id") Long id) throws Exception {
+        return new ResponseEntity<>(departmentService.findById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
